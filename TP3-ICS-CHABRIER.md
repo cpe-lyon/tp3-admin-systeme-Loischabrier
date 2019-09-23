@@ -86,10 +86,18 @@ commandes utiles) ? Utilisez la réponse à pour écrire un script appelé origi
 
 `which -a ls | xargs dpkg -s 2>/dev/null`
 
+        if [ -z "$1" ]; then
+              echo "Veuillez fournir un nom de commande"
+        else
+              dpkg -S $(which "$1");
+        fi
+
 ## Exercice 3.
 
 Ecrire une commande qui affiche “INSTALLÉ” ou “NON INSTALLÉ” selon le nom et le statut du package
 spécifié dans cette commande.
+
+`(dpkg -l "nom_package" | grep "^ii") && echo "installé" || echo "non installé"
 
 ## Exercice 4.
 
