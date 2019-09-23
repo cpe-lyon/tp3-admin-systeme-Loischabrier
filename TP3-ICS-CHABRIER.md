@@ -1,63 +1,99 @@
 Loïs CHABRIER
 
-# _TP 2 - Bash_
+# _TP 3 - Gestion des paquets_
 
-## Exercice 1. Variables d’environnement
+## Exercice 1. Commandes de base
 
 <br>
-<span style='color:red'>1.</span> Dans quels dossiers bash trouve-t-il les commandes tapées par l’utilisateur ?
+<span style='color:red'></span> Commencez par mettre à jour votre système avec les commandes vues dans le cours.
 </span>
 
-Pour savoir quels sont les dossiers où bash trouve-t-il les commandes, il faut executer la commande  `echo $PATH`, qui va parcourir tout les dossiers où figurent des commandes bash.
-La commande nous retourne les chemins des dossiers comme ceci : `/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin`
+`sudo apt upgrade` puis `sudo apt update`
 
-<span style='color:red'>2.</span> Quelle variable d’environnement permet à la commande cd tapée sans argument de vous ramener dans votre répertoire personnel ?
+<span style='color:red'>1.</span> Quels sont les 5 derniers paquets installés sur votre machine ?
 
-C'est la variable d'environnement `$HOME` qui permet à la commande `cd` passée sans argument de retourner au répertoire personnel : `cd $HOME`. 
+  - `snapd.list`
+  - `sosreport.list`
+  - `ubuntu-server.list`
+  - `unattended-upgrades.list`
+  - `cloud-init.list`
 
-<span style='color:red'>3.</span> Explicitez le rôle des variables LANG, PWD, OLDPWD, SHELL et _.
+<span style='color:red'>2.</span> Utiliser dpkg et apt pour compter le nombre de paquets installés (ne pas hésiter à consulter le manuel !). Comment explique-t-on la (petite) différence de comptage ?
 
-  - La variable `$LANG` est utilisée pour déterminer la langue des messages à afficher.
-  - La variable `$PWD` permet de savoir où l'on se trouve dans l'arborescence. Elle retourne le chemin absolu vers le répertoire courant.
-  - La variable `$OLDPWD` permet de savoir d'où l'on vient, c'est-à-dire qu'elle retourne le chemin absolu vers le répertoire courant précédent.
-  - La variable `$SHELL` retourne le chemin vers l'interpréteur SHELL utilisé par défaut.
+Pour 'dpkg' : `dpkg --list | wc --lines` (524 ici)
+Pour 'apt' : `apt list --installed | wc --lines` (520 ici)
 
 
-<span style='color:red'>4.</span> Créez une variable locale MY_VAR (le contenu n’a pas d’importance). Vérifiez que la variable existe.
+<span style='color:red'>3.</span> Combien de paquets sont disponibles en téléchargement ?
 
-Pour créer la variable, entrer `MY_VAR=toto` ce qui signifie qu'on entre `toto` dans la variable `MY_VAR`.
-Pour vérifier qu'elle est existante, il suffit de vérifier s'il est possible d'afficher son contenu. Pour se faire, entrer `echo $MY_VAR`. La commande devrait retourner `toto`.
+Il faut faire : `apt list | wc -l`
 
-<span style='color:red'>5.</span> Tapez ensuite la commande bash. Que fait-elle ? La variable MY_VAR existe-t-elle ? Expliquez. A la fin de cette question, tapez la commande exit pour revenir dans votre session initiale.
+<span style='color:red'>4.</span> Créer un alias “maj” qui met à jour le système.
 
-Lorsque l'on tape `bash`, on ouvre un nouveau Shell. C'est comme si on ouvrait une nouvelle console ou une nouvelle fenêtre. Lorsqu'on fait un `echo $MY_VAR`, on peut voir que la commande ne retourne rien et c'est normal. Comme nous avons créé la variable locale `MY_VAR` dans le Shell de niveau 1, on ne peut pas l'utiliser dans les autres niveau, et en l'occurence ici nous sommes passé au niveau 2 en tapant la commande `bash` (pour vérifier le niveau dans lequel nous sommes, entrer `echo $SHLVL`), de ce fait, nous ne pouvons pas utiliser la variable locale au niveau 1.
+Dans `~/.bashrc` : `alias maj="sudo apt update && sudo apt upgrade"`
 
-<span style='color:red'>6.</span> Transformez MY_VAR en une variable d’environnement et recommencez la question précédente. Expliquez.
+<span style='color:red'>5.</span> A quoi sert le paquet fortunes ? Installez-le.
 
-$MY_VAR est une variable locale. Pour la transformer en variable d'environnement, il suffit de taper `export MY_VAR="le texte à entrer dedans"`. Désormais, effectuer un `echo $MY_VAR` pour vérifier qu'on a bien la variable créée avec le texte passé dedans. 
-Maintenant, ouvrir un nouveau bash avec `bash` et afficher le contenu de la variable avec `echo $MY_VAR`. On peut désormais voir que la variable d'environnement MY_VAR est fonctionnelle puisqu'elle est utilisable peut importe le niveau de Shell où l'on se trouve.
+Il sert à afficher des proverbes ou des citations dans le terminal. Pour l'installer, il faut taper `sudo apt install fortune-mod`.
 
-<span style='color:red'>7.</span> Créer la variable d’environnement NOMS ayant pour contenu vos noms de binômes séparés par un espace.
-Afficher la valeur de NOMS pour vérifier que l’affectation est correcte.
+<span style='color:red'>6.</span> Quels paquets proposent de jouer au sudoku ?
 
-Entrer `export NOMS="COTET CHABRIER"` puis `echo $NOMS`. Si l'affectation est correcte, la commande devrait retourner "COTET CHABRIER".
+      fltk1.1-games/disco 1.1.10-26ubuntu1 amd64
+        Boîte à outils Fast Light - exemples de jeux : jeux de dames, sudoku
 
-<span style='color:red'>8.</span> Ecrivez une commande qui affiche ”Bonjour à vous deux, binôme1 binôme2 !” (où binôme1 et binôme2 sont vos deux noms) en utilisant la variable NOMS.
+      fltk1.3-games/disco 1.3.4-9ubuntu1 amd64
+        Boîte à outils Fast Light - exemples de jeux : jeux de dames, sudoku
 
-Entrer simplement `echo "Bonjour à vous deux," $NOMS`
+      gnome-sudoku/disco 1:3.32.0-1 amd64
+        Casse-tête Sudoku pour GNOME
 
-<span style='color:red'>9.</span> Quelle différence y a-t-il entre donner une valeur vide à une variable et l’utilisation de la commande unset ?
+      hitori/disco 3.31.0-1 amd64
+        Jeu de puzzle logique similaire au sudoku
 
-La différence est qu'une variable vide ne possède pas de contenu mais existe quand même, alors qu'en utilisant la commande `unset`, on supprime carrément la variable et son contenu.
+      ksudoku/disco 4:18.12.3-0ubuntu1 amd64
+        Jeu et Solveur de Sudoku
 
-<span style='color:red'>10.</span> Utilisez la commande echo pour écrire exactement la phrase : $HOME = chemin (où chemin est votre dossier personnel d’après bash)
+      libqqwing-dev/disco 1.3.4-1.1 amd64
+        outil pour générer et résoudre des casse-tête Sudoku (développement)
 
-Il y a 2 manières de le faire : `echo "\$HOME = $HOME"` ou alors `echo '$HOME'" = $HOME"`.
+      libqqwing2v5/disco 1.3.4-1.1 amd64
+        outil pour générer et résoudre des casse-tête Sudoku (bibliothèque)
 
-### Programmation Bash
+      nudoku/disco 1.0.0-1 amd64
+        ncurses based sudoku games
 
-Vous enregistrerez vos scripts dans un dossier script que vous créerez dans votre répertoire personnel.
-Tous les scripts sont bien entendu à tester.
-Ajoutez le chemin vers script à votre PATH de manière permanente.
+      qqwing/disco 1.3.4-1.1 amd64
+        tool for generating and solving Sudoku puzzles (application)
 
-Pour se faire, dans le répertoire personnel, entrer `mkdir script` puis `nano .bashrc` pour rajouter la ligne `PATH=$PATH:~/script` à la fin du fichier. Pour vérifier, entrer `echo $PATH` pour vérifier que notre chemin apparaît dans le retour de la commande.
+      sudoku/disco 1.0.5-2build3 amd64
+        Sudoku en mode console
+
+      texlive-games/disco 2018.20190227-1 all
+        TeX Live : Composition de jeux
+
+
+<span style='color:red'>7.</span> Lister les derniers paquets installés explicitement avec la commande `apt install`
+
+`grep "apt install" /var/log/apt/history.log`
+
+## Exercice 2.
+
+A partir de quel paquet est installée la commande ls ? Comment obtenir cette information en une seule
+commande, pour n’importe quel programme (indice : la réponse est dans le poly de cours 2, dans la liste des
+commandes utiles) ? Utilisez la réponse à pour écrire un script appelé origine-commande (sans l’extension .sh) prenant en argument le nom d’une commande, et indiquant quel paquet l’a installée.
+
+`which -a ls | xargs dpkg -s 2>/dev/null`
+
+## Exercice 3.
+
+Ecrire une commande qui affiche “INSTALLÉ” ou “NON INSTALLÉ” selon le nom et le statut du package
+spécifié dans cette commande.
+
+## Exercice 4.
+
+Lister les programmes livrés avec coreutils. A quoi sert la commande ’[’ et comment afficher ce qu’elle
+retourne ?
+
+## Exercice 5. Aptitude
+
+Installez le paquet emacs à l’aide de la version graphique d’aptitude.
