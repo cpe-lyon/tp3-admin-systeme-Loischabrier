@@ -38,6 +38,8 @@ Il sert à afficher des proverbes ou des citations dans le terminal. Pour l'inst
 
 <span style='color:red'>6.</span> Quels paquets proposent de jouer au sudoku ?
 
+Grâce à la commande `apt search sudoku`, on obtient tout les paquets qui proposent le sudoku.
+
       fltk1.1-games/disco 1.1.10-26ubuntu1 amd64
         Boîte à outils Fast Light - exemples de jeux : jeux de dames, sudoku
 
