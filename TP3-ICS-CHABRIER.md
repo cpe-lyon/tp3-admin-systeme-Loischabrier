@@ -97,13 +97,35 @@ commandes utiles) ? Utilisez la réponse à pour écrire un script appelé origi
 Ecrire une commande qui affiche “INSTALLÉ” ou “NON INSTALLÉ” selon le nom et le statut du package
 spécifié dans cette commande.
 
-`(dpkg -l "nom_package" | grep "^ii") && echo "installé" || echo "non installé"
+`(dpkg -l "nom_package" | grep "^ii") && echo "installé" || echo "non installé"`
 
 ## Exercice 4.
 
 Lister les programmes livrés avec coreutils. A quoi sert la commande ’[’ et comment afficher ce qu’elle
 retourne ?
 
-## Exercice 5. Aptitude
+`apt show coreutils` pour lister les programmes.
+`[` est l'équivalent de `test`.
+
+## Exercice 5.
 
 Installez le paquet emacs à l’aide de la version graphique d’aptitude.
+
+Taper `aptitude` 
+Ensuite taper `/` pour chercher le paquet emacs 
+Sélectionner le paquets emacs 
+Puis + ig <entré> g et le paquet s'installe. 
+
+## Exercice 6.
+
+Installer la version Oracle de Java (avec l’ajout des PPA)
+
+    sudo add-apt-repository ppa:linuxuprising/java
+    sudo apt update
+    sudo apt install oracle-java12-installer
+
+Vérifiez qu’un nouveau fichier a été créé dans /etc/apt/sources.list.d. Que contient-il ?
+
+    cd /etc/apt/source.list.d
+    ls
+    linuxuprising-ubuntu-java-disco.list
